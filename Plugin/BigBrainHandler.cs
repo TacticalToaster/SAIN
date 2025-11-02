@@ -289,6 +289,17 @@ namespace SAIN
                 toggleVanillaLayers(brainList, LayersToToggle, useVanillaLayers);
             }
 
+			public static void AddCustomLayersToRole(List<string> brains, List<WildSpawnType> roles)
+			{
+				var settings = SAINPlugin.LoadedPreset.GlobalSettings.General.Layers;
+
+				BrainManager.AddCustomLayer(typeof(DebugLayer), brains, 99, roles);
+				BrainManager.AddCustomLayer(typeof(SAINAvoidThreatLayer), brains, 80, roles);
+				BrainManager.AddCustomLayer(typeof(ExtractLayer), brains, settings.SAINExtractLayerPriority, roles);
+				BrainManager.AddCustomLayer(typeof(CombatSquadLayer), brains, settings.SAINCombatSquadLayerPriority, roles);
+				BrainManager.AddCustomLayer(typeof(CombatSoloLayer), brains, settings.SAINCombatSoloLayerPriority, roles);
+			}
+
             private static void toggleVanillaLayers(List<string> brainNames, List<string> layerNames, bool useVanillaLayers)
             {
                 if (useVanillaLayers)
