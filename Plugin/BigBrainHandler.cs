@@ -290,6 +290,20 @@ public static class BigBrainHandler
             ToggleVanillaLayers(brainList, LayersToToggle, useVanillaLayers);
         }
 
+		public static void AddCustomLayersToCustomBrains(List<string> brainList, List<WildSpawnType> roles, bool includeExtract = false)
+            {
+                var settings = SAINPlugin.LoadedPreset.GlobalSettings.General.Layers;
+                //BrainManager.AddCustomLayer(typeof(BotUnstuckLayer), stringList, 98);
+                BrainManager.AddCustomLayer(typeof(DebugLayer), brainList, 99, roles);
+                BrainManager.AddCustomLayer(typeof(SAINAvoidThreatLayer), brainList, 80, roles);
+				if (includeExtract)
+				{
+					BrainManager.AddCustomLayer(typeof(ExtractLayer), brainList, settings.SAINExtractLayerPriority, roles);
+				}
+                BrainManager.AddCustomLayer(typeof(CombatSquadLayer), brainList, settings.SAINCombatSquadLayerPriority, roles);
+                BrainManager.AddCustomLayer(typeof(CombatSoloLayer), brainList, settings.SAINCombatSoloLayerPriority, roles);
+            }
+
         private static void ToggleVanillaLayers(List<string> brainNames, List<string> layerNames, bool useVanillaLayers)
         {
             if (useVanillaLayers)
